@@ -11,6 +11,9 @@ urls = ["https://h1bdata.info/index.php?em=&job=Software+Engineer&city=&year=%d"
 parser = HTMLTableParser()
 df = parser.batch_parse(urls)
 df.loc[:, 'name'] = [year for year in range(2012, 2019)]
+def convert_float2int(df, column):
+    df.loc[:, column] = df[column].apply(lambda x: int(x.replace(',' , '')))
+df['value'].apply(lambda x: convert_float2int(x, 'BASE SALARY'))
 ```
 
 The values of this DataFrame store the H1B visa info of each year as a Pandas DataFrame Table.
