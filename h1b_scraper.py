@@ -13,8 +13,14 @@ class H1B_Scraper():
                 url = "https://h1bdata.info/index.php?em=&job=%s&city=&year=%d" % (job.replace(' ', '+'), year)
                 ## The H1B info website only contains one table
                 table = self.parser.parse(url).iloc[0, 1]
+                if len(table) == 0:
+                    table = None
                 tables.loc[len(tables)] = (year, job, table)
         def str2int(df, column):
+            if df is None:
+                return
+            if column not in df.columns:
+                return
             df.loc[:, column] = df[column].apply(lambda x: int(x.replace(',' , '')))
         tables['Table'].apply(lambda x: str2int(x, 'BASE SALARY'))
         return tables
