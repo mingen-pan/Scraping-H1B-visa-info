@@ -1,24 +1,35 @@
 # Scraping-H1B-visa-info
 Using BeautifulSoup and Urllib packages to scrape the H1B visa info website
 
-First import the file
+Download the python files and put them into the current path. Then import the file:
 ```
-from html_table_parser import HTMLTableParser
+from h1b_scraper import H1B_Scraper
 ```
-then run the following code to obatin the DataFrame
+Run the following code to obatin the DataFrame:
 ```
-urls = ["https://h1bdata.info/index.php?em=&job=Software+Engineer&city=&year=%d" % year  for year in range(2012, 2019)]
-parser = HTMLTableParser()
-df = parser.batch_parse(urls)
-df.loc[:, 'name'] = [year for year in range(2012, 2019)]
-def convert_float2int(df, column):
-    df.loc[:, column] = df[column].apply(lambda x: int(x.replace(',' , '')))
-df['value'].apply(lambda x: convert_float2int(x, 'BASE SALARY'))
+scraper = H1B_Scraper()
+years = [year for year in range(2017, 2019)]
+jobs = ["Software Engineer", "Data Scientist"]
+tables = scraper.scrape(years, jobs)
 ```
 
-The values of this DataFrame store the H1B visa info of each year as a Pandas DataFrame Table.
+The values of this DataFrame `tables` store the H1B visa info of different years and job titles as a Pandas DataFrame Table.
 
-For example, run the code `df.loc[df['name'] == 2018, 'value'][0]` and get the following dataframe:
+For example:
+```
+        Year	Job Title	Table
+0	2017	Software Engineer	EMPLOYER JOB T...
+1	2017	Data Scientist	EMPLOYER \...
+2	2018	Software Engineer	EMPLOYER ...
+3	2018	Data Scientist	EMPLOYER JOB T...
+```
+
+To extract the table given specific year and job title:
+```
+scraper.extract_specific_table(tables, 2018, "Software Engineer")
+```
+
+Then you have the following dataframe:
 
 (Visualization here is bad, but they are well alligned in the dataframe.)
 ```
