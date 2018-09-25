@@ -4,7 +4,7 @@ import pandas as pd
 class H1B_Scraper():
     def __init__(self):
         self.parser = HTMLTableParser()
-    def scraper(self, years, jobs):
+    def scrape(self, years, jobs):
         assert type(years) is list or type(years) is tuple, "years should be list or tuple"
         assert type(jobs) is list or type(jobs) is tuple, "jobs should be list or tuple"
         tables = pd.DataFrame(columns = ['Year', 'Job Title', 'Table'])
