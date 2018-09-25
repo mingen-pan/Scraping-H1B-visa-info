@@ -1,5 +1,8 @@
 # Scraping-H1B-visa-info
-Using BeautifulSoup and Urllib packages to scrape the H1B visa info website
+
+The example code can be found on the `example.py`.
+
+This project uses `BeautifulSoup` (aka `bs4`) and `urllib` packages to scrape the H1B visa info website. In order to use this project, it is recommended to run in the `Python3` enviornment and install the packages `bs4`, `urllib`, and `pandas`.
 
 Download the python files and put them into the current path. Then import the file:
 ```
@@ -8,8 +11,8 @@ from h1b_scraper import H1B_Scraper
 Run the following code to obatin the DataFrame:
 ```
 scraper = H1B_Scraper()
-years = [year for year in range(2017, 2019)]
-jobs = ["Software Engineer", "Data Scientist"]
+years = [year for year in range(2017, 2019)] ## get the list [2017, 2018]
+jobs = ["Software Engineer", "Data Scientist"] ## Capital or not doesn't matter.
 tables = scraper.scrape(years, jobs)
 ```
 
